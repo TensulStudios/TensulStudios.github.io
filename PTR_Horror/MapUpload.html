@@ -201,7 +201,7 @@
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
                             const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
-                            addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.spcluid);
+                            addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid);
                         });
                     });
                 });
