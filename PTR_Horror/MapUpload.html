@@ -39,7 +39,7 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                document.getElementById('userUid').innerHTML = `Logged in as `+user.uid+"!";
+                document.getElementById('userUid').innerHTML = `Logged in as `+user.uid;
                 currentUser = user;
                 listAllFiles(); // List files after the user is authenticated
             } else {
@@ -90,7 +90,7 @@
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
-                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1';
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22';
                             addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner);
                         });
                     });
