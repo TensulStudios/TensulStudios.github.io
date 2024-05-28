@@ -239,24 +239,22 @@
         }
 
         function deleteFile(fullPath) {
-            const fileRef = firebase.storage().ref(fullPath);
-            fileRef.getMetadata().then(metadata => {
-                if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
-                    fileRef.delete().then(() => {
-                        alert("File deleted successfully");
-                        listAllFiles(); // Refresh the file list
-                    }).catch(error => {
-                        console.error("File deletion failed:", error);
-                        alert("File deletion failed");
-                    });
-                } else {
-                    alert("You do not have permission to delete this file");
-                }
+            // Extract filename from fullPath
+            const filename = fullPath.split('/').pop();
+            
+            // Reference the file by its name
+            const fileRef = firebase.storage().ref().child(filename);
+        
+            // Delete the file
+            fileRef.delete().then(() => {
+                alert("File deleted successfully");
+                listAllFiles(); // Refresh the file list
             }).catch(error => {
-                console.error("Failed to get file metadata:", error);
-                alert("Failed to get file metadata");
+                console.error("File deletion failed:", error);
+                alert("File deletion failed");
             });
         }
+
     </script>
 </body>
 </html>
