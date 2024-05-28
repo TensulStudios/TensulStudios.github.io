@@ -261,6 +261,7 @@
         }
 
         function deleteFile(uid) {
+            console.log("deleting file with uid \""+uid+"\"")
             // Get a reference to the storage root
             const storageRef = firebase.storage().ref();
         
@@ -269,6 +270,7 @@
                 result.items.forEach(fileRef => {
                     // Get the metadata for the file
                     fileRef.getMetadata().then(metadata => {
+                          console.log("comparing "+uid+ " to "+meta)
                         // Check if the UID in the metadata matches the provided UID
                         if (metadata.customMetadata && metadata.customMetadata.uid === uid) {
                             fileRef.delete().then(() => {
