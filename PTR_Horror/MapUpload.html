@@ -6,7 +6,7 @@
     <title>PTR Modded Maps</title>
 </head>
 <body>
-    <h1>PTR Modded Maps!</h1>
+    <h1>PTR Modded Maps</h1>
     <input type="file" id="fileInput" accept=".ptr">
     <button onclick="uploadFile()">Upload</button>
     <button onclick="listAllFiles()">List All Files</button>
@@ -17,7 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
             authDomain: "ptr-mods.firebaseapp.com",
@@ -58,7 +57,7 @@
             }
 
             const storageRef = firebase.storage().ref();
-            const fileRef = storageRef.child(`${currentUser.uid}/${file.name}`);
+            const fileRef = storageRef.child(file.name);
             const metadata = {
                 customMetadata: {
                     owner: currentUser.uid
