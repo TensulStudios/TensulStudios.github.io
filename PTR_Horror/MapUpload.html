@@ -194,8 +194,6 @@
                    }
                 });
             });
-
-            const storageRef = firebase.storage().ref();
             const fileRef = storageRef.child(file.name);
             const metadata = {
                 customMetadata: {
