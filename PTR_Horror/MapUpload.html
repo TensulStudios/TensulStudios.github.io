@@ -44,8 +44,20 @@
     .delete-button {
         position: absolute;
         bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 80%;
+        transform: translateX(-80%);
+        background-color: #f25f5c; /* Delete button color */
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .download-button {
+        position: absolute;
+        bottom: 10px;
+        left: 20%;
+        transform: translateX(-20%);
         background-color: #f25f5c; /* Delete button color */
         color: #fff;
         border: none;
@@ -200,7 +212,7 @@
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
-                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
+                            const isOwner = true;
                             addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid);
                         });
                     });
@@ -237,9 +249,10 @@
                 <div class="grid-item">
                     <div class="file-name">${fileName}</div>
                     <br>
-                    <button class="delete-button" class="file-link" href="${url}" target="_blank">Download</a>
-                    <br>
-                    ${isOwner ? `<button class="delete-button" onclick="deleteFile('${uid}')">Delete</button>` : ``}
+                    <div class="btn-list-side">
+                        <button class="download-button" class="file-link" href="${url}" target="_blank">Download</a>
+                        ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${uid}')">Delete</button>` : ``}
+                    </div>
                 </div>
             `;
             fileList.appendChild(fileItem);
