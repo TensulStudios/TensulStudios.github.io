@@ -280,14 +280,7 @@
                     fileRef.getMetadata().then(metadata => {
                         // Check if the UID in the metadata matches the provided UID
                         if (metadata.customMetadata && metadata.customMetadata.uid === uid) {
-                            // Found the file with the matching UID
-                            fileRef.getDownloadURL().then(url => {
-                                // Do something with the URL, e.g., display or download the file
-                                console.log("Download URL:", url);
-                            }).catch(error => {
-                                console.error("Failed to get file:", error);
-                                // Handle error, e.g., file not found
-                            });
+                            return fileRef;
                         }
                     }).catch(error => {
                         console.error("Failed to get metadata:", error);
