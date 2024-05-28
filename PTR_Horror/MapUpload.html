@@ -18,14 +18,14 @@
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
-  authDomain: "ptr-mods.firebaseapp.com",
-  projectId: "ptr-mods",
-  storageBucket: "ptr-mods.appspot.com",
-  messagingSenderId: "673382195782",
-  appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
-  measurementId: "G-TN679480VG"
-};
+            apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
+            authDomain: "ptr-mods.firebaseapp.com",
+            projectId: "ptr-mods",
+            storageBucket: "ptr-mods.appspot.com",
+            messagingSenderId: "673382195782",
+            appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
+            measurementId: "G-TN679480VG"
+        };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
@@ -50,7 +50,7 @@
             fileRef.put(file).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     alert("File uploaded successfully");
-                    sendToDiscord(url);
+                    sendToDiscord(url, file.name); // Pass file name to the function
                     addFileToList(file.name, url);
                 });
             }).catch(error => {
@@ -62,6 +62,7 @@
         function listAllFiles() {
             const storageRef = firebase.storage().ref();
             storageRef.listAll().then(result => {
+                clearFileList(); // Clear existing file list
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         addFileToList(fileRef.name, url);
@@ -73,9 +74,10 @@
             });
         }
 
-        function sendToDiscord(url) {
-            const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
-            const payload = JSON.stringify({ content: `File uploaded: ${url}` });
+        function sendToDiscord(url, fileName) { // Accept file name as argument
+            const webhookUrl = "https://discord.com/api/webhooks/1244828570270961794/RLAqNQu6CpQc2fde-nmjbAVoe7nKJCm627jk1EhvytJKkrfUoinUX_l9b6YiFUZJt30T";
+            const message = `A new map has just been uploaded! ${fileName}`; // Use file name in the message
+            const payload = JSON.stringify({ content: message });
 
             fetch(webhookUrl, {
                 method: 'POST',
@@ -85,9 +87,9 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                alert('File URL sent to Discord');
+                alert('Notification sent to Discord');
             }).catch(error => {
-                console.error("Failed to send to Discord:", error);
+                console.error("Failed to send notification to Discord:", error);
             });
         }
 
@@ -99,6 +101,11 @@
                 <a href="${url}" target="_blank">${fileName}</a>
             `;
             fileList.appendChild(fileItem);
+        }
+
+        function clearFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = ''; // Clear the file list
         }
     </script>
 </body>
