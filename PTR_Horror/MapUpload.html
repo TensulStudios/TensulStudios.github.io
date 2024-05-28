@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing</title>
+</head>
+<body>
+    <h1>File Sharing</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+    <div id="fileList"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
+  authDomain: "ptr-mods.firebaseapp.com",
+  projectId: "ptr-mods",
+  storageBucket: "ptr-mods.appspot.com",
+  messagingSenderId: "673382195782",
+  appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
+  measurementId: "G-TN679480VG"
+};
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Sign in anonymously
+        firebase.auth().signInAnonymously().catch(function(error) {
+            console.error("Authentication failed:", error);
+        });
+
+        function uploadFile() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) {
+                alert("No file selected");
+                return;
+            }
+
+            const storageRef = firebase.storage().ref();
+            const fileRef = storageRef.child(file.name);
+            fileRef.put(file).then(() => {
+                fileRef.getDownloadURL().then(url => {
+                    alert("File uploaded successfully");
+                    sendToDiscord(url);
+                    addFileToList(file.name, url);
+                });
+            }).catch(error => {
+                console.error("File upload failed:", error);
+                alert("File upload failed");
+            });
+        }
+
+        function deleteFile(fileName) {
+            const storageRef = firebase.storage().ref();
+            const fileRef = storageRef.child(fileName);
+            fileRef.delete().then(() => {
+                alert("File deleted successfully");
+                removeFileFromList(fileName);
+            }).catch(error => {
+                console.error("File deletion failed:", error);
+                alert("File deletion failed");
+            });
+        }
+
+        function sendToDiscord(url) {
+            const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+            const payload = JSON.stringify({ content: `File uploaded: ${url}` });
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                alert('File URL sent to Discord');
+            }).catch(error => {
+                console.error("Failed to send to Discord:", error);
+            });
+        }
+
+        function addFileToList(fileName, url) {
+            const fileList = document.getElementById('fileList');
+            const fileItem = document.createElement('div');
+            fileItem.id = `file-${fileName}`;
+            fileItem.innerHTML = `
+                <a href="${url}" target="_blank">${fileName}</a>
+                <button onclick="deleteFile('${fileName}')">Delete</button>
+            `;
+            fileList.appendChild(fileItem);
+        }
+
+        function removeFileFromList(fileName) {
+            const fileItem = document.getElementById(`file-${fileName}`);
+            fileItem.remove();
+        }
+    </script>
+</body>
+</html>
