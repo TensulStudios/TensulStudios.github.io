@@ -1,17 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PTR Modded Maps</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTR Modded Maps</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #3b3054; /* Dark purple background */
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+    
+    .container {
+        width: 60%;
+        max-width: 1200px;
+        padding: 20px;
+        background-color: #6a5f7f; /* Light purple surrounding */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
+        gap: 20px; /* Adjust gap between items */
+    }
+
+    .grid-item {
+        background-color: #4e4273; /* Darkish purple */
+        border: 1px solid #3b3054; /* Dark purple border */
+        color: #fff; /* Text color */
+        padding: 20px;
+        border-radius: 5px; /* Rounded corners */
+        position: relative; /* For positioning the delete button */
+    }
+
+    .delete-button {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #f25f5c; /* Delete button color */
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .file-name {
+        font-size: 18px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .file-link {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .file-link:hover {
+        text-decoration: underline;
+    }
+
+    .upload-buttons {
+        display: flex;
+        gap: 5px; /* Adjust the space between buttons */
+    }
+
+    .upload-buttons button {
+        background-color: #6a4f7f;
+        color: white;
+        border: none;
+        padding:5px 50px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .upload-buttons button:hover {
+        background-color: #5a3f6f;
+    }
+
+    #userUid {
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+</style>
 </head>
 <body>
-    <div id="userUid">Logging in..</div>
-    <h1>PTR Modded Maps</h1>
-    <input type="file" id="fileInput" accept=".ptr">
-    <button onclick="uploadFile()">Upload</button>
-    <button onclick="listAllFiles()">List All Files</button>
-    <div id="fileList"></div>
+    <div class="container">
+        <div id="userUid">Logging in..</div>
+        <h2>PTR Modded Maps</h2>
+        <div class="upload-buttons">
+            <input type="file" id="fileInput" accept=".ptr">
+            <br>
+            <button onclick="uploadFile()">Upload</button>
+            <br>
+            <button onclick="listAllFiles()">List All Files</button>
+            <br>
+        </div>
+        <br>
+        <div class="grid-container" id="fileList"></div>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
@@ -19,13 +117,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
-            authDomain: "ptr-mods.firebaseapp.com",
-            projectId: "ptr-mods",
-            storageBucket: "ptr-mods.appspot.com",
-            messagingSenderId: "673382195782",
-            appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
-            measurementId: "G-TN679480VG"
+          apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
+          authDomain: "ptr-mods.firebaseapp.com",
+          projectId: "ptr-mods",
+          storageBucket: "ptr-mods.appspot.com",
+          messagingSenderId: "673382195782",
+          appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
+          measurementId: "G-TN679480VG"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -124,8 +222,11 @@
             const fileItem = document.createElement('div');
             fileItem.id = `file-${fileName}`;
             fileItem.innerHTML = `
-                <a href="${url}" target="_blank">${fileName}</a>
-                ${isOwner ? `<button onclick="deleteFile('${fullPath}')">Delete</button>` : ''}
+                <div class="grid-item">
+                    <div class="file-name">${fileName}</div>
+                    <a class="file-link" href="${url}" target="_blank">Download</a>
+                    ${isOwner ? `<button class="delete-button" onclick="deleteFile('${fullPath}')">Delete</button>` : ``}
+                </div>
             `;
             fileList.appendChild(fileItem);
         }
