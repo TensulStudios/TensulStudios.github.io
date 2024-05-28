@@ -261,15 +261,6 @@
         }
 
         function deleteFile(fullPath) {
-            getFileByUID(fullPath).delete().then(() => {
-                alert("File deleted successfully");
-                listAllFiles(); // Refresh the file list
-            }).catch(error => {
-                console.error("File deletion failed:", error);
-                alert("File deletion failed");
-            });
-        }
-        function getFileByUID(uid) {
             // Get a reference to the storage root
             const storageRef = firebase.storage().ref();
         
@@ -280,12 +271,14 @@
                     fileRef.getMetadata().then(metadata => {
                         // Check if the UID in the metadata matches the provided UID
                         if (metadata.customMetadata && metadata.customMetadata.uid === uid) {
-                            return fileRef;
+                            fileRef.delete().then(() => {
+                                listAllFiles(); // Refresh the file list
+                            }).catch(error => {
+                                alert("File deletion failed");
+                            });
                         }
-                    }).catch(error => {
-                        console.error("Failed to get metadata:", error);
-                        // Handle error
-                    });
+                    }
+                                               
                 });
             }).catch(error => {
                 console.error("Failed to list files:", error);
