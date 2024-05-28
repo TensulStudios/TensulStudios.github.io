@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Sharing</title>
+    <title>PTR Modded Maps</title>
 </head>
 <body>
-    <h1>File Sharing</h1>
+    <h1>PTR Modded Maps</h1>
     <input type="file" id="fileInput" accept=".ptr">
     <button onclick="uploadFile()">Upload</button>
     <button onclick="listAllFiles()">List All Files</button>
@@ -50,8 +50,8 @@
             fileRef.put(file).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     alert("File uploaded successfully");
-                    sendToDiscord(url, file.name); // Pass file name to the function
-                    addFileToList(file.name, url);
+                    sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
+                    addFileToList(GetNameWithoutFileExtension(file.name), url);
                 });
             }).catch(error => {
                 console.error("File upload failed:", error);
@@ -59,13 +59,20 @@
             });
         }
 
+        function GetNameWithoutFileExtension(fileName)
+        {
+            const split = fileName.split(".");
+            const extension = "."+split[split.length - 1];
+            return fileName.replace(extension, "")
+        }
+        
         function listAllFiles() {
             const storageRef = firebase.storage().ref();
             storageRef.listAll().then(result => {
                 clearFileList(); // Clear existing file list
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
-                        addFileToList(fileRef.name, url);
+                        addFileToList(GetNameWithoutFileExtension(fileRef.name), url);
                     });
                 });
             }).catch(error => {
@@ -76,7 +83,7 @@
 
         function sendToDiscord(url, fileName) { // Accept file name as argument
             const webhookUrl = "https://discord.com/api/webhooks/1244828570270961794/RLAqNQu6CpQc2fde-nmjbAVoe7nKJCm627jk1EhvytJKkrfUoinUX_l9b6YiFUZJt30T";
-            const message = `A new map has just been uploaded! ${fileName}`; // Use file name in the message
+            const message = `A new map has just been uploaded, ${fileName}.`; // Use file name in the message
             const payload = JSON.stringify({ content: message });
 
             fetch(webhookUrl, {
@@ -87,7 +94,6 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                alert('Notification sent to Discord');
             }).catch(error => {
                 console.error("Failed to send notification to Discord:", error);
             });
