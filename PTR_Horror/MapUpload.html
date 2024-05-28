@@ -167,7 +167,6 @@
             };
             fileRef.put(file, metadata).then(() => {
                 fileRef.getDownloadURL().then(url => {
-                    alert("File uploaded successfully");
                     sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
                     addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
                 });
