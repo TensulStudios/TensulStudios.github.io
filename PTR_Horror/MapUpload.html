@@ -264,7 +264,7 @@
                     <div class="file-name">${fileName}</div>
                     <br>
                     <div class="btn-list-side">
-                        ${isOwner ? `   <button class="download-button" class="file-link" href="${url}" target="_blank">Download</a>` : `   <button class="download-button-nodele" class="file-link" href="${url}" target="_blank">Download</a>`}
+                        ${isOwner ? `   <button class="download-button" class="file-link" onclick="window.open(${url}, '_blank');" target="_blank">Download` : `   <button class="download-button-nodele" class="file-link" onclick="window.open(${url}, '_blank');" target="_blank">Download`}
                         ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${uid}')">Delete</button>` : ``}
                     </div>
                 </div>
