@@ -273,6 +273,7 @@
                           console.log("comparing "+uid+ " to "+metadata.customMetadata.spcluid)
                         // Check if the UID in the metadata matches the provided UID
                         if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
+                            console.log("found")
                             fileRef.delete().then(() => {
                                 listAllFiles(); // Refresh the file list
                             }).catch(error => {
@@ -285,6 +286,7 @@
                 console.error("Failed to list files:", error);
                 // Handle error
             });
+                                listAllFiles(); // Refresh the file list
         }
 
     </script>
