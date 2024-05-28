@@ -270,7 +270,7 @@
                 result.items.forEach(fileRef => {
                     // Get the metadata for the file
                     fileRef.getMetadata().then(metadata => {
-                          console.log("comparing "+uid+ " to "+meta)
+                          console.log("comparing "+uid+ " to "+metadata.customMetadata.uid)
                         // Check if the UID in the metadata matches the provided UID
                         if (metadata.customMetadata && metadata.customMetadata.uid === uid) {
                             fileRef.delete().then(() => {
