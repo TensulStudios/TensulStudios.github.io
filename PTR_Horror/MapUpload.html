@@ -236,7 +236,8 @@
             fileItem.innerHTML = `
                 <div class="grid-item">
                     <div class="file-name">${fileName}</div>
-                    <a class="file-link" href="${url}" target="_blank">Download</a>
+                    <br>
+                    <button class="delete-button" class="file-link" href="${url}" target="_blank">Download</a>
                     <br>
                     ${isOwner ? `<button class="delete-button" onclick="deleteFile('${uid}')">Delete</button>` : ``}
                 </div>
