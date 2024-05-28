@@ -270,9 +270,9 @@
                 result.items.forEach(fileRef => {
                     // Get the metadata for the file
                     fileRef.getMetadata().then(metadata => {
-                          console.log("comparing "+uid+ " to "+metadata.customMetadata.uid)
+                          console.log("comparing "+uid+ " to "+metadata.customMetadata.spcluid)
                         // Check if the UID in the metadata matches the provided UID
-                        if (metadata.customMetadata && metadata.customMetadata.uid === uid) {
+                        if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
                             fileRef.delete().then(() => {
                                 listAllFiles(); // Refresh the file list
                             }).catch(error => {
