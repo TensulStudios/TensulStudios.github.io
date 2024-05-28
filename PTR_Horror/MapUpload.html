@@ -7,8 +7,9 @@
 </head>
 <body>
     <h1>File Sharing</h1>
-    <input type="file" id="fileInput">
+    <input type="file" id="fileInput" accept=".ptr">
     <button onclick="uploadFile()">Upload</button>
+    <button onclick="listAllFiles()">List All Files</button>
     <div id="fileList"></div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -39,6 +40,10 @@
                 alert("No file selected");
                 return;
             }
+            if (!file.name.endsWith('.ptr')) {
+                alert("Only .ptr files are allowed");
+                return;
+            }
 
             const storageRef = firebase.storage().ref();
             const fileRef = storageRef.child(file.name);
@@ -54,15 +59,17 @@
             });
         }
 
-        function deleteFile(fileName) {
+        function listAllFiles() {
             const storageRef = firebase.storage().ref();
-            const fileRef = storageRef.child(fileName);
-            fileRef.delete().then(() => {
-                alert("File deleted successfully");
-                removeFileFromList(fileName);
+            storageRef.listAll().then(result => {
+                result.items.forEach(fileRef => {
+                    fileRef.getDownloadURL().then(url => {
+                        addFileToList(fileRef.name, url);
+                    });
+                });
             }).catch(error => {
-                console.error("File deletion failed:", error);
-                alert("File deletion failed");
+                console.error("Failed to list files:", error);
+                alert("Failed to list files");
             });
         }
 
@@ -90,14 +97,8 @@
             fileItem.id = `file-${fileName}`;
             fileItem.innerHTML = `
                 <a href="${url}" target="_blank">${fileName}</a>
-                <button onclick="deleteFile('${fileName}')">Delete</button>
             `;
             fileList.appendChild(fileItem);
-        }
-
-        function removeFileFromList(fileName) {
-            const fileItem = document.getElementById(`file-${fileName}`);
-            fileItem.remove();
         }
     </script>
 </body>
