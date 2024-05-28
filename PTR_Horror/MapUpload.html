@@ -184,6 +184,15 @@
                 alert("Only .ptr files are allowed");
                 return;
             }
+            storageRef.listAll().then(result => {
+                result.items.forEach(fileRef => {
+                   if(fileRef.name == file.name)
+                   {
+                       alert( "That name is already taken, think of something creative!" );
+                       return;
+                   }
+                });
+            });
 
             const storageRef = firebase.storage().ref();
             const fileRef = storageRef.child(file.name);
