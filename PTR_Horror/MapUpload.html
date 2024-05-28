@@ -6,7 +6,7 @@
     <title>PTR Modded Maps</title>
 </head>
 <body>
-    <h1>PTR Modded Maps</h1>
+    <h1>PTR Modded Maps!</h1>
     <input type="file" id="fileInput" accept=".ptr">
     <button onclick="uploadFile()">Upload</button>
     <button onclick="listAllFiles()">List All Files</button>
@@ -15,6 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -29,9 +30,20 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
+        let currentUser = null;
+
         // Sign in anonymously
         firebase.auth().signInAnonymously().catch(function(error) {
             console.error("Authentication failed:", error);
+        });
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = user;
+                listAllFiles(); // List files after the user is authenticated
+            } else {
+                currentUser = null;
+            }
         });
 
         function uploadFile() {
@@ -46,12 +58,17 @@
             }
 
             const storageRef = firebase.storage().ref();
-            const fileRef = storageRef.child(file.name);
-            fileRef.put(file).then(() => {
+            const fileRef = storageRef.child(`${currentUser.uid}/${file.name}`);
+            const metadata = {
+                customMetadata: {
+                    owner: currentUser.uid
+                }
+            };
+            fileRef.put(file, metadata).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     alert("File uploaded successfully");
                     sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
-                    addFileToList(GetNameWithoutFileExtension(file.name), url);
+                    addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
                 });
             }).catch(error => {
                 console.error("File upload failed:", error);
@@ -59,20 +76,22 @@
             });
         }
 
-        function GetNameWithoutFileExtension(fileName)
-        {
+        function GetNameWithoutFileExtension(fileName) {
             const split = fileName.split(".");
-            const extension = "."+split[split.length - 1];
-            return fileName.replace(extension, "")
+            const extension = "." + split[split.length - 1];
+            return fileName.replace(extension, "");
         }
-        
+
         function listAllFiles() {
             const storageRef = firebase.storage().ref();
             storageRef.listAll().then(result => {
                 clearFileList(); // Clear existing file list
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
-                        addFileToList(GetNameWithoutFileExtension(fileRef.name), url);
+                        fileRef.getMetadata().then(metadata => {
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid;
+                            addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner);
+                        });
                     });
                 });
             }).catch(error => {
@@ -99,12 +118,13 @@
             });
         }
 
-        function addFileToList(fileName, url) {
+        function addFileToList(fileName, url, fullPath, isOwner) {
             const fileList = document.getElementById('fileList');
             const fileItem = document.createElement('div');
             fileItem.id = `file-${fileName}`;
             fileItem.innerHTML = `
                 <a href="${url}" target="_blank">${fileName}</a>
+                ${isOwner ? `<button onclick="deleteFile('${fullPath}')">Delete</button>` : ''}
             `;
             fileList.appendChild(fileItem);
         }
@@ -114,7 +134,25 @@
             fileList.innerHTML = ''; // Clear the file list
         }
 
-        listAllFiles()
+        function deleteFile(fullPath) {
+            const fileRef = firebase.storage().ref(fullPath);
+            fileRef.getMetadata().then(metadata => {
+                if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
+                    fileRef.delete().then(() => {
+                        alert("File deleted successfully");
+                        listAllFiles(); // Refresh the file list
+                    }).catch(error => {
+                        console.error("File deletion failed:", error);
+                        alert("File deletion failed");
+                    });
+                } else {
+                    alert("You do not have permission to delete this file");
+                }
+            }).catch(error => {
+                console.error("Failed to get file metadata:", error);
+                alert("Failed to get file metadata");
+            });
+        }
     </script>
 </body>
 </html>
