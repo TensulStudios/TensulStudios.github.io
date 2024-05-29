@@ -288,7 +288,7 @@
                     <br>
                     <div class="btn-list-side">
                         ${isOwner ? `   <button class="download-button" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download` : `   <button class="download-button-nodele" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`}
-                        ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${uid}')">Delete</button>` : ``}
+                        ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${fullPath}')">Delete</button>` : ``}
                     </div>
                 </div>
             `;
@@ -311,7 +311,26 @@
             fileList.innerHTML = ''; // Clear the file list
         }
 
-        function deleteFile(uid) {
+        function deleteFile(fullPath) {
+            const fileRef = firebase.storage().ref(fullPath);
+            fileRef.getMetadata().then(metadata => {
+                if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
+                    fileRef.delete().then(() => {
+                        alert("File deleted successfully");
+                        listAllFiles(); // Refresh the file list
+                    }).catch(error => {
+                        console.error("File deletion failed:", error);
+                        alert("File deletion failed");
+                    });
+                } else {
+                    alert("You do not have permission to delete this file");
+                }
+            }).catch(error => {
+                console.error("Failed to get file metadata:", error);
+                alert("Failed to get file metadata");
+            });
+        }
+        function deleteFileOLD(uid) {
             console.log("deleting file with uid \"" + uid + "\"");
             const storageRef = firebase.storage().ref();
             storageRef.listAll().then(result => {
