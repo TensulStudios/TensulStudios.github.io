@@ -174,7 +174,7 @@
             }
         });
 
-        function uploadFile() {
+        async function uploadFile() {
             const storageRef = firebase.storage().ref();
             const file = document.getElementById('fileInput').files[0];
             if (!file) {
@@ -298,9 +298,9 @@ const fileExists = await FileAlreadyExists(file.name);
             return uuid;
         }
 
-        function FileAlreadyExists(name)
+        async function FileAlreadyExists(name)
             {
-                const storageRef = firebase.storage().ref();
+                  const storageRef = firebase.storage().ref();
                 storageRef.listAll.then(result => {
                     result.items.forEach(file => {
                         if(file.name === name)
