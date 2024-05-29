@@ -246,7 +246,6 @@
         });
 
         async function uploadFile() {
-          alert( "check")
             const storageRef = firebase.storage().ref();
             const file = document.getElementById('fileInput').files[0];
             if (!file) {
@@ -269,12 +268,10 @@
                 }
             };
 
-          alert( "erm what the sigma")
-
             await fileRef.put(file, metadata).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
-                    alert( "what")
+                    
                 });
             }).catch(error => {
                 console.error("File upload failed:", error);
