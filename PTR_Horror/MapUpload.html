@@ -187,16 +187,15 @@
             }
             
             let sls = true;
-            storageRef.listAll().then(result => {
-                result.items.forEach(fileRef => {
-                   if(fileRef.name == file.name)
-                   {
-                       alert( "That name is already taken, think of something creative!" );
-                       sls = false;
-                       return;
-                   }
-                });
-            });
+            
+
+const fileExists = await FileAlreadyExists(file.name);
+            if (fileExists) {
+                alert("That name is already taken, think of something creative!");
+                return;
+            }
+            
+                
             const fileRef = storageRef.child(file.name);
             const metadata = {
                 customMetadata: {
@@ -298,6 +297,21 @@
             });
             return uuid;
         }
+
+        function FileAlreadyExists(name)
+            {
+                const storageRef = firebase.storage().ref();
+                storageRef.listAll.then(result => {
+                    result.items.forEach(file => {
+                        if(file.name === name)
+                        {
+                            file.delete().then(()=>{
+                                listAllFiles();
+                            })
+                        }
+                    })
+                })
+            }
         
         function clearFileList() {
             const fileList = document.getElementById('fileList');
