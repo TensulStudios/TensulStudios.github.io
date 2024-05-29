@@ -185,17 +185,13 @@
                 alert("Only .ptr files are allowed");
                 return;
             }
-            
-            let sls = true;
-            
 
-const fileExists = await FileAlreadyExists(file.name);
+            const fileExists = await FileAlreadyExists(file.name);
             if (fileExists) {
                 alert("That name is already taken, think of something creative!");
                 return;
             }
-            
-                
+
             const fileRef = storageRef.child(file.name);
             const metadata = {
                 customMetadata: {
@@ -203,9 +199,8 @@ const fileExists = await FileAlreadyExists(file.name);
                     spcluid: generateUUID()
                 }
             };
-            if(sls==true){
 
-            fileRef.put(file, metadata).then(() => {
+            await fileRef.put(file, metadata).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
                     addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
@@ -214,7 +209,6 @@ const fileExists = await FileAlreadyExists(file.name);
                 console.error("File upload failed:", error);
                 alert("File upload failed");
             });
-            }
         }
 
         function GetNameWithoutFileExtension(fileName) {
@@ -287,66 +281,43 @@ const fileExists = await FileAlreadyExists(file.name);
             fileList.appendChild(fileItem);
         }
 
-        // Function to generate a UUID
-        function generateUUID() {
-            let dt = new Date().getTime();
-            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = (dt + Math.random()*16) % 16 | 0;
-                dt = Math.floor(dt/16);
-                return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
-            });
-            return uuid;
+        async function FileAlreadyExists(name) {
+            const storageRef = firebase.storage().ref();
+            const result = await storageRef.listAll();
+            for (const file of result.items) {
+                if (file.name === name) {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        async function FileAlreadyExists(name)
-            {
-                  const storageRef = firebase.storage().ref();
-                storageRef.listAll.then(result => {
-                    result.items.forEach(file => {
-                        if(file.name === name)
-                        {
-                            file.delete().then(()=>{
-                                listAllFiles();
-                            })
-                        }
-                    })
-                })
-            }
-        
         function clearFileList() {
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = ''; // Clear the file list
         }
 
         function deleteFile(uid) {
-            console.log("deleting file with uid \""+uid+"\"")
-            // Get a reference to the storage root
+            console.log("deleting file with uid \"" + uid + "\"");
             const storageRef = firebase.storage().ref();
-        
-            // List all items in the storage
             storageRef.listAll().then(result => {
                 result.items.forEach(fileRef => {
-                    // Get the metadata for the file
                     fileRef.getMetadata().then(metadata => {
-                          console.log("comparing "+uid+ " to "+metadata.customMetadata.spcluid)
-                        // Check if the UID in the metadata matches the provided UID
+                        console.log("comparing " + uid + " to " + metadata.customMetadata.spcluid);
                         if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
-                            console.log("found")
+                            console.log("found");
                             fileRef.delete().then(() => {
                                 listAllFiles(); // Refresh the file list
                             }).catch(error => {
                                 alert("File deletion failed");
                             });
                         }
-                    })                      
+                    });
                 });
             }).catch(error => {
                 console.error("Failed to list files:", error);
-                // Handle error
             });
-                                listAllFiles(); // Refresh the file list
         }
-
     </script>
 </body>
 </html>
