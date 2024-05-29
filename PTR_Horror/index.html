@@ -143,6 +143,29 @@
             left: 0;
         }
 
+        .bottom-left-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Light purple surrounding */
+            width: 70px;
+            height: 70px;
+        }
+
+        .bottom-left-button {
+            background-color: rgba(0, 0, 0, 0);
+            /* Light purple surrounding */
+            border-radius: 10px;
+            /* Rounded corners */
+            text-align: center;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            position: absolute;
+            bottom: 2%;
+            width: 60px;
+            height: 60px;
+            border: none;
+            cursor: pointer;
+        }
+
+
         #userUid {
             margin-bottom: 20px;
             font-size: 16px;
@@ -156,8 +179,10 @@
             window.open("https://tmporarystudios.github.io/PTR_Horror/"+file,".html","_blank");
         }
     </script>
+    
+    <button class="bottom-left-button" onclick="window.open('https://discord.gg/UssjuJMFyH')"><img  src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
     <div class="grid-container">
-        <h1>Welcome to the official <span style="color:red;">PTR_Horror</span> server!</h1>
+        <h1>Welcome to the official <span style="color:red;">PTR_Horror</span> website!</h1>
         <div class="container" onclick="OpenFile('MapExplorer')">Explore Community Mods!</div>
         <div class="container" onclick="OpenFile('MakeAMap')">Make your own mods!</div>
     </div>
