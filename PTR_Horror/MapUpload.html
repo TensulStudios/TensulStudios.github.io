@@ -1,126 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PTR Modded Maps</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #3b3054; /* Dark purple background */
-        color: white;
-        font-family: Arial, sans-serif;
-    }
-    
-    .container {
-        width: 60%;
-        max-width: 1200px;
-        padding: 20px;
-        background-color: #6a5f7f; /* Light purple surrounding */
-        border-radius: 10px; /* Rounded corners */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTR Modded Maps</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3b3054;
+            /* Dark purple background */
+            color: white;
+            font-family: cursive, sans-serif;
+        }
 
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
-        gap: 20px; /* Adjust gap between items */
-    }
+        .container {
+            width: 60%;
+            max-width: 1200px;
+            padding: 50px;
+            background-color: rgba(60, 12, 25, 0.3);
+            /* Light purple surrounding */
+            border-radius: 10px;
+            /* Rounded corners */
+        }
 
-    .grid-item {
-        display: grid;
-        background-color: #4e4273; /* Darkish purple */
-        border: 1px solid #3b3054; /* Dark purple border */
-        color: #fff; /* Text color */
-        padding: 20px;
-        border-radius: 5px; /* Rounded corners */
-        position: relative; /* For positioning the delete button */
-    }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            /* Adjust column width as needed */
+            gap: 20px;
+            /* Adjust gap between items */
+        }
 
-    .delete-button {
-        position: absolute;
-        bottom: 10px;
-        left: 80%;
-        transform: translateX(-80%);
-        background-color: #f25f5c; /* Delete button color */
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .download-button {
-        position: absolute;
-        bottom: 10px;
-        left: 20%;
-        transform: translateX(-20%);
-        background-color: green; /* Delete button color */
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        .grid-item {
+            display: grid;
+            background-color: #4e4273;
+            /* Darkish purple */
+            border: 1px solid #3b3054;
+            /* Dark purple border */
+            color: #fff;
+            /* Text color */
+            padding: 20px;
+            border-radius: 5px;
+            /* Rounded corners */
+            position: relative;
+            /* For positioning the delete button */
+        }
 
-    .download-button-nodele {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: green; /* Delete button color */
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        .delete-button {
+            position: absolute;
+            bottom: 10px;
+            left: 80%;
+            transform: translateX(-80%);
+            background-color: #f25f5c;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .file-name {
-        text-align: center;
-        font-size: 9px;
-        margin-bottom: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+        .download-button-nodele:hover {
+            padding: 9px 14px;
+            background-color: green;
+            /* Delete button color */
+        }
 
-    .file-link {
-        color: #fff;
-        text-decoration: none;
-    }
+        .download-button:hover {
+            background-color: green;
+            /* Delete button color */
+            padding: 9px 14px;
+        }
 
-    .file-link:hover {
-        text-decoration: underline;
-    }
+        .download-button {
+            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+            position: absolute;
+            bottom: 10px;
+            left: 20%;
+            transform: translateX(-20%);
+            background-color: #039e03;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .upload-buttons {
-        display: flex;
-        gap: 5px; /* Adjust the space between buttons */
-    }
+        .download-button-nodele {
+            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #039e03;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .upload-buttons button {
-        background-color: #6a4f7f;
-        color: white;
-        border: none;
-        padding:5px 50px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .file-name {
+            text-align: center;
+            font-size: 9px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-    .upload-buttons button:hover {
-        background-color: #5a3f6f;
-    }
+        .file-link {
+            color: #fff;
+            text-decoration: none;
+        }
 
-    #userUid {
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
-</style>
+        .file-link:hover {
+            text-decoration: underline;
+        }
+
+        .upload-buttons {
+            display: flex;
+            gap: 5px;
+            /* Adjust the space between buttons */
+        }
+
+        .upload-buttons button {
+            background-color: #6a4f7f;
+            color: white;
+            border: none;
+            padding: 5px 50px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-buttons button:hover {
+            background-color: #5a3f6f;
+        }
+
+        .bottom-left-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Light purple surrounding */
+            width: 70px;
+            height: 70px;
+        }
+
+        .bottom-left-button {
+            background-color: rgba(0, 0, 0, 0);
+            /* Light purple surrounding */
+            border-radius: 10px;
+            /* Rounded corners */
+            text-align: center;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            position: absolute;
+            bottom: 2%;
+            width: 60px;
+            height: 60px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #userUid {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+    </style>
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="PTR Map Explorer">
     <meta property="og:description" content="Download or Upload mods for PTR!">
@@ -136,7 +188,9 @@
     <meta name="twitter:description" content="Download or Upload mods for PTR!">
     <meta name="twitter:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
 </head>
+
 <body>
+    <button class="bottom-left-button" onclick="window.open('https://discord.gg/UssjuJMFyH')"><img  src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
     <div class="container">
         <div id="userUid">Logging in..</div>
         <h2>PTR Modded Maps</h2>
@@ -147,7 +201,7 @@
             <br>
             <button onclick="listAllFiles()">Reload</button>
             <br>
-            <button onclick= "window.open('https://tmporarystudios.github.io/PTR_Horror/MakeAMap.html','_blank ')">Make a Map!</button>
+            <button onclick="window.open('https://tmporarystudios.github.io/PTR_Horror/MakeAMap.html','_blank ')">Make a Map!</button>
             <br>
         </div>
         <br>
@@ -160,13 +214,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
-          authDomain: "ptr-mods.firebaseapp.com",
-          projectId: "ptr-mods",
-          storageBucket: "ptr-mods.appspot.com",
-          messagingSenderId: "673382195782",
-          appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
-          measurementId: "G-TN679480VG"
+            apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
+            authDomain: "ptr-mods.firebaseapp.com",
+            projectId: "ptr-mods",
+            storageBucket: "ptr-mods.appspot.com",
+            messagingSenderId: "673382195782",
+            appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
+            measurementId: "G-TN679480VG"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -175,12 +229,12 @@
 
         // Sign in anonymously
         firebase.auth().signInAnonymously().catch(function(error) {
-            console.error("Authentication failed:", error);
+            document.getElementById('userUid').innerHTML = `Login failed.`;
         });
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                document.getElementById('userUid').innerHTML = `Logged in as `+user.uid;
+                document.getElementById('userUid').innerHTML = `Logged in as ` + user.uid;
                 currentUser = user;
                 listAllFiles(); // List files after the user is authenticated
             } else {
@@ -235,9 +289,9 @@
         function generateUUID() {
             let dt = new Date().getTime();
             const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = (dt + Math.random()*16) % 16 | 0;
-                dt = Math.floor(dt/16);
-                return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
+                const r = (dt + Math.random() * 16) % 16 | 0;
+                dt = Math.floor(dt / 16);
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
             });
             return uuid;
         }
@@ -263,11 +317,15 @@
         function sendToDiscord(url, fileName) { // Accept file name as argument
             const webhookUrl = "https://discord.com/api/webhooks/1244828570270961794/RLAqNQu6CpQc2fde-nmjbAVoe7nKJCm627jk1EhvytJKkrfUoinUX_l9b6YiFUZJt30T";
             const message = `A new map has just been uploaded, ${fileName}.`; // Use file name in the message
-            const payload = JSON.stringify({ content: message });
+            const payload = JSON.stringify({
+                content: message
+            });
 
             fetch(webhookUrl, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: payload
             }).then(response => {
                 if (!response.ok) {
@@ -330,6 +388,7 @@
                 alert("Failed to get file metadata");
             });
         }
+
         function deleteFileOLD(uid) {
             console.log("deleting file with uid \"" + uid + "\"");
             const storageRef = firebase.storage().ref();
@@ -353,4 +412,5 @@
         }
     </script>
 </body>
+
 </html>
