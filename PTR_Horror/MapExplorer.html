@@ -206,7 +206,7 @@
     <div class="upload-buttons">
       <input type="file" id="fileInput" accept=".ptr">
       <br>
-      <button onclick="uploadFile()">Upload</button>
+      <button id="uploadbuttonTxt" onclick="uploadFile()">Upload</button>
       <br>
       <button onclick="listAllFiles()">Reload</button>
       <br>
@@ -250,8 +250,16 @@
         currentUser = null;
       }
     });
+     let fileAlrProc = false
+     async function uploadFile() {
+      document.getElementById( "uploadbuttonTxt").innerText = 'Uploading..';
+      if(fileAlrProc)
+      {
+          alert("You are already uploading a file!" );
+        return;
+      }
 
-    async function uploadFile() {
+       fileAlrProc=true;
       const storageRef = firebase.storage().ref();
       const file = document.getElementById('fileInput').files[0];
       if (!file) {
@@ -279,10 +287,14 @@
 
       await fileRef.put(file, metadata).then(() => {
         fileRef.getDownloadURL().then(url => {
+          fileAlrProc=false;
+          document.getElementById( "uploadbuttonTxt").innerText = 'Uploaded!';
           sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
           addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
         });
       }).catch(error => {
+        document.getElementById( "uploadbuttonTxt").innerText = 'Upload failed.';
+        fileAlrProc=false;
         console.error("File upload failed:", error);
         alert("File upload failed");
       });
