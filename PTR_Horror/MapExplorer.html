@@ -2,444 +2,442 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PTR Modded Maps</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #3b3054;
-      /* Dark purple background */
-      color: white;
-      font-family: cursive, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTR Modded Maps</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3b3054;
+            /* Dark purple background */
+            color: white;
+            font-family: cursive, sans-serif;
+        }
 
-    .container {
-      width: 60%;
-      max-width: 1200px;
-      padding: 50px;
-      background-color: rgba(60, 12, 25, 0.3);
-      /* Light purple surrounding */
-      border-radius: 10px;
-      /* Rounded corners */
-    }
+        .container {
+            width: 60%;
+            max-width: 1200px;
+            padding: 50px;
+            background-color: rgba(60, 12, 25, 0.3);
+            /* Light purple surrounding */
+            border-radius: 10px;
+            /* Rounded corners */
+        }
 
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      /* Adjust column width as needed */
-      gap: 20px;
-      /* Adjust gap between items */
-    }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            /* Adjust column width as needed */
+            gap: 20px;
+            /* Adjust gap between items */
+        }
 
-    .grid-item {
-      display: grid;
-      background-color: #4e4273;
-      /* Darkish purple */
-      border: 1px solid #3b3054;
-      /* Dark purple border */
-      color: #fff;
-      /* Text color */
-      padding: 20px;
-      border-radius: 5px;
-      /* Rounded corners */
-      position: relative;
-      /* For positioning the delete button */
-    }
+        .grid-item {
+            display: grid;
+            background-color: #4e4273;
+            /* Darkish purple */
+            border: 1px solid #3b3054;
+            /* Dark purple border */
+            color: #fff;
+            /* Text color */
+            padding: 20px;
+            border-radius: 5px;
+            /* Rounded corners */
+            position: relative;
+            /* For positioning the delete button */
+        }
 
-    .delete-button {
-      transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
-      position: absolute;
-      bottom: 10px;
-      left: 80%;
-      transform: translateX(-80%);
-      background-color: #f25f5c;
-      /* Delete button color */
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .delete-button {
+            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+            position: absolute;
+            bottom: 10px;
+            left: 80%;
+            transform: translateX(-80%);
+            background-color: #f25f5c;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .download-button-nodele:hover {
-      padding: 9px 14px;
-      background-color: green;
-      /* Delete button color */
-    }
+        .download-button-nodele:hover {
+            padding: 9px 14px;
+            background-color: green;
+            /* Delete button color */
+        }
 
-    .download-button:hover {
-      background-color: green;
-      /* Delete button color */
-      padding: 9px 14px;
-    }
+        .download-button:hover {
+            background-color: green;
+            /* Delete button color */
+            padding: 9px 14px;
+        }
 
-    .delete-button:hover {
-      background-color: #cf514e;
-      /* Delete button color */
-      padding: 9px 14px;
-    }
+        .delete-button:hover {
+            background-color: #cf514e;
+            /* Delete button color */
+            padding: 9px 14px;
+        }
 
-    .download-button {
-      transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
-      position: absolute;
-      bottom: 10px;
-      left: 20%;
-      transform: translateX(-20%);
-      background-color: #039e03;
-      /* Delete button color */
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .download-button {
+            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+            position: absolute;
+            bottom: 10px;
+            left: 20%;
+            transform: translateX(-20%);
+            background-color: #039e03;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .download-button-nodele {
-      transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #039e03;
-      /* Delete button color */
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .download-button-nodele {
+            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #039e03;
+            /* Delete button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    .file-name {
-      text-align: center;
-      font-size: 9px;
-      margin-bottom: 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+        .file-name {
+            text-align: center;
+            font-size: 9px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-    .file-link {
-      color: #fff;
-      text-decoration: none;
-    }
+        .file-link {
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .file-link:hover {
-      text-decoration: underline;
-    }
+        .file-link:hover {
+            text-decoration: underline;
+        }
 
-    .upload-buttons {
-      display: flex;
-      gap: 5px;
-      /* Adjust the space between buttons */
-    }
+        .upload-buttons {
+            display: flex;
+            gap: 5px;
+            /* Adjust the space between buttons */
+        }
 
-    .upload-buttons button {
-      background-color: #6a4f7f;
-      color: white;
-      border: none;
-      padding: 5px 50px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+        .upload-buttons button {
+            background-color: #6a4f7f;
+            color: white;
+            border: none;
+            padding: 5px 50px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .upload-buttons button:hover {
-      background-color: #5a3f6f;
-    }
+        .upload-buttons button:hover {
+            background-color: #5a3f6f;
+        }
 
-    .bottom-left-button:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      /* Light purple surrounding */
-      width: 70px;
-      height: 70px;
-    }
+        .bottom-left-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Light purple surrounding */
+            width: 70px;
+            height: 70px;
+        }
 
-    .bottom-left-button {
-      background-color: rgba(0, 0, 0, 0);
-      /* Light purple surrounding */
-      border-radius: 10px;
-      /* Rounded corners */
-      text-align: center;
-      transition: width 0.3s, height 0.3s, background-color 0.3s;
-      position: absolute;
-      bottom: 2%;
-      width: 60px;
-      height: 60px;
-      border: none;
-      cursor: pointer;
-    }
+        .bottom-left-button {
+            background-color: rgba(0, 0, 0, 0);
+            /* Light purple surrounding */
+            border-radius: 10px;
+            /* Rounded corners */
+            text-align: center;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            position: absolute;
+            bottom: 2%;
+            width: 60px;
+            height: 60px;
+            border: none;
+            cursor: pointer;
+        }
 
-    #userUid {
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
-  </style>
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="PTR Map Explorer">
-  <meta property="og:description" content="Download or Upload mods for PTR!">
-  <meta property="og:url" content="https://TMPOraryStudios.github.io/PTR_Horror/MapUpload">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+        #userUid {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+    </style>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="PTR Map Explorer">
+    <meta property="og:description" content="Download or Upload mods for PTR!">
+    <meta property="og:url" content="https://TMPOraryStudios.github.io/PTR_Horror/MapUpload">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-  <!-- Twitter Card Meta Tags (optional, but recommended) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PTR Map Explorer">
-  <meta name="twitter:description" content="Download or Upload mods for PTR!">
-  <meta name="twitter:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
+    <!-- Twitter Card Meta Tags (optional, but recommended) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PTR Map Explorer">
+    <meta name="twitter:description" content="Download or Upload mods for PTR!">
+    <meta name="twitter:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
 </head>
 
 <body>
-  <button class="bottom-left-button" onclick="window.open('https://discord.gg/UssjuJMFyH')"><img src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
-  <div class="container">
-    <div id="userUid">
-      Logging in..
+    <button class="bottom-left-button" onclick="window.open('https://discord.gg/UssjuJMFyH')"><img src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
+    <div class="container">
+        <div id="userUid">
+            Logging in..
+        </div>
+        <h2>PTR Modded Maps</h2>
+        <div class="upload-buttons">
+            <input type="file" id="fileInput" accept=".ptr">
+            <br>
+            <button id="uploadbuttonTxt" onclick="uploadFile()">Upload</button>
+            <br>
+            <button onclick="listAllFiles()">Reload</button>
+            <br>
+            <button onclick="window.open('https://tmporarystudios.github.io/PTR_Horror/MakeAMap.html','_blank ')">Make a Map!</button>
+            <br>
+        </div>
+        <br>
+        <div class="grid-container" id="fileList"></div>
     </div>
-    <h2>PTR Modded Maps</h2>
-    <div class="upload-buttons">
-      <input type="file" id="fileInput" accept=".ptr">
-      <br>
-      <button id="uploadbuttonTxt" onclick="uploadFile()">Upload</button>
-      <br>
-      <button onclick="listAllFiles()">Reload</button>
-      <br>
-      <button onclick="window.open('https://tmporarystudios.github.io/PTR_Horror/MakeAMap.html','_blank ')">Make a Map!</button>
-      <br>
-    </div>
-    <br>
-    <div class="grid-container" id="fileList"></div>
-  </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
-      authDomain: "ptr-mods.firebaseapp.com",
-      projectId: "ptr-mods",
-      storageBucket: "ptr-mods.appspot.com",
-      messagingSenderId: "673382195782",
-      appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
-      measurementId: "G-TN679480VG"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAjukFGPyzofl93Ppl8tyIG82piCLtv1O8",
+            authDomain: "ptr-mods.firebaseapp.com",
+            projectId: "ptr-mods",
+            storageBucket: "ptr-mods.appspot.com",
+            messagingSenderId: "673382195782",
+            appId: "1:673382195782:web:35ed9f0c1cb1bb8efae047",
+            measurementId: "G-TN679480VG"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-    let currentUser = null;
+        let currentUser = null;
 
-    // Sign in anonymously
-    firebase.auth().signInAnonymously().catch(function(error) {
-      document.getElementById('userUid').innerHTML = `Login failed.`;
-    });
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        document.getElementById('userUid').innerHTML = `Logged in as ` + user.uid;
-        currentUser = user;
-        listAllFiles(); // List files after the user is authenticated
-      } else {
-        currentUser = null;
-      }
-    });
-     let fileAlrProc = false
-     async function uploadFile() {
-      document.getElementById( "uploadbuttonTxt").innerText = 'Uploading..';
-      if(fileAlrProc)
-      {
-          alert("You are already uploading a file!" );
-        return;
-      }
-
-       fileAlrProc=true;
-      const storageRef = firebase.storage().ref();
-      const file = document.getElementById('fileInput').files[0];
-      if (!file) {
-fileAlrProc=false;
-        alert("No file selected");
-        return;
-      }
-      if (!file.name.endsWith('.ptr')) {
-fileAlrProc=false;
-        alert("Only .ptr files are allowed");
-        return;
-      }
-
-      const fileExists = await FileAlreadyExists(file.name);
-      if (fileExists) {
-        fileAlrProc=false;
-        alert("That name is already taken, think of something more creative!");
-        return;
-      }
-
-      const fileRef = storageRef.child(file.name);
-      const metadata = {
-        customMetadata: {
-          owner: currentUser.uid,
-          spcluid: generateUUID()
-        }
-      };
-
-      await fileRef.put(file, metadata).then(() => {
-        fileRef.getDownloadURL().then(url => {
-          fileAlrProc=false;
-          document.getElementById( "uploadbuttonTxt").innerText = 'Uploaded!';
-          sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
-          addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
+        // Sign in anonymously
+        firebase.auth().signInAnonymously().catch(function(error) {
+            document.getElementById('userUid').innerHTML = `Login failed.`;
         });
-      }).catch(error => {
-        document.getElementById( "uploadbuttonTxt").innerText = 'Upload failed.';
-        fileAlrProc=false;
-        console.error("File upload failed:", error);
-        alert("File upload failed");
-      });
-    }
 
-    function GetNameWithoutFileExtension(fileName) {
-      const split = fileName.split(".");
-      const extension = "." + split[split.length - 1];
-      return fileName.replace(extension, "");
-    }
-
-    // Function to generate a UUID
-    function generateUUID() {
-      let dt = new Date().getTime();
-      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c === 'x' ? r: (r & 0x3 | 0x8)).toString(16);
-      });
-      return uuid;
-    }
-
-    function listAllFiles() {
-      const storageRef = firebase.storage().ref();
-      storageRef.listAll().then(result => {
-        clearFileList(); // Clear existing file list
-        result.items.forEach(fileRef => {
-          fileRef.getDownloadURL().then(url => {
-            fileRef.getMetadata().then(metadata => {
-              const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
-              if (!metadata.customMetadata.privateFile) {
-                addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid);
-              }
-            });
-          });
-        });
-      }).catch(error => {
-        console.error("Failed to list files:", error);
-        alert("Failed to list files");
-      });
-    }
-
-    function sendToDiscord(url, fileName) {
-      // Accept file name as argument
-      const webhookUrl = "https://discord.com/api/webhooks/1244828570270961794/RLAqNQu6CpQc2fde-nmjbAVoe7nKJCm627jk1EhvytJKkrfUoinUX_l9b6YiFUZJt30T";
-      const message = `A new map has just been uploaded, ${fileName}.`; // Use file name in the message
-      const payload = JSON.stringify({
-        content: message
-      });
-
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: payload
-      }).then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-      }).catch(error => {
-        console.error("Failed to send notification to Discord:", error);
-      });
-    }
-
-    function addFileToList(fileName, url, fullPath, isOwner, uid) {
-      const fileList = document.getElementById('fileList');
-      const fileItem = document.createElement('div');
-      fileItem.id = `file-${fileName}`;
-      fileItem.innerHTML = `
-      <div class="grid-item">
-      <div class="file-name">${fileName}</div>
-      <br>
-      <div class="btn-list-side">
-      ${isOwner ? `   <button class="download-button" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`: `   <button class="download-button-nodele" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`}
-      ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${fullPath}')">Delete</button>`: ``}
-      </div>
-      </div>
-      `;
-      fileList.appendChild(fileItem);
-    }
-
-    async function FileAlreadyExists(name) {
-      const storageRef = firebase.storage().ref();
-      const result = await storageRef.listAll();
-      for (const file of result.items) {
-        fileRef.getMetadata().then(metadata => {
-          if (file.name === name && !metadata.customMetadata.privateFile) {
-            return true;
-          }
-        });
-      }
-      return false;
-    }
-
-    function clearFileList() {
-      const fileList = document.getElementById('fileList');
-      fileList.innerHTML = ''; // Clear the file list
-    }
-
-    function deleteFile(fullPath) {
-      const fileRef = firebase.storage().ref(fullPath);
-      fileRef.getMetadata().then(metadata => {
-        if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
-          fileRef.delete().then(() => {
-            alert("File deleted successfully");
-            listAllFiles(); // Refresh the file list
-          }).catch(error => {
-            console.error("File deletion failed:", error);
-            alert("File deletion failed");
-          });
-        } else {
-          alert("You do not have permission to delete this file");
-        }
-      }).catch(error => {
-        console.error("Failed to get file metadata:", error);
-        alert("Failed to get file metadata");
-      });
-    }
-
-    function deleteFileOLD(uid) {
-      console.log("deleting file with uid\"" + uid + "\"");
-      const storageRef = firebase.storage().ref();
-      storageRef.listAll().then(result => {
-        result.items.forEach(fileRef => {
-          fileRef.getMetadata().then(metadata => {
-            console.log("comparing " + uid + " to " + metadata.customMetadata.spcluid);
-            if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
-              console.log("found");
-              fileRef.delete().then(() => {
-                listAllFiles(); // Refresh the file list
-              }).catch(error => {
-                alert("File deletion failed");
-              });
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                document.getElementById('userUid').innerHTML = `Logged in as ` + user.uid;
+                currentUser = user;
+                listAllFiles(); // List files after the user is authenticated
+            } else {
+                currentUser = null;
             }
-          });
         });
-      }).catch(error => {
-        console.error("Failed to list files:", error);
-      });
-    }
-  </script>
+        let fileAlrProc = false
+        async function uploadFile() {
+            document.getElementById("uploadbuttonTxt").innerText = 'Uploading..';
+            if (fileAlrProc) {
+                alert("You are already uploading a file!");
+                return;
+            }
+
+            fileAlrProc = true;
+            const storageRef = firebase.storage().ref();
+            const file = document.getElementById('fileInput').files[0]
+            if (!file) {
+                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                fileAlrProc = false;
+                alert("No file selected");
+                return;
+            }
+            if (!file.name.endsWith('.ptr')) {
+                fileAlrProc = false;
+                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                alert("Only .ptr files are allowed");
+                return;
+            }
+            const fileExists = await FileAlreadyExists(file.name);
+            if (fileExists) {
+                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                fileAlrProc = false;
+                alert("That name is already taken, think of something more creative!");
+                return;
+            }
+            const fileRef = storageRef.child(file.name);
+            const metadata = {
+                customMetadata: {
+                    owner: currentUser.uid,
+                    spcluid: generateUUID()
+                }
+            };
+
+            await fileRef.put(file, metadata).then(() => {
+                fileRef.getDownloadURL().then(url => {
+                    fileAlrProc = false;
+                    document.getElementById("uploadbuttonTxt").innerText = 'Uploaded!';
+                    sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
+                    addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true);
+                });
+            }).catch(error => {
+                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                fileAlrProc = false;
+                console.error("File upload failed:", error);
+                alert("File upload failed");
+            });
+        }
+
+        function GetNameWithoutFileExtension(fileName) {
+            const split = fileName.split(".");
+            const extension = "." + split[split.length - 1];
+            return fileName.replace(extension, "");
+        }
+
+        // Function to generate a UUID
+        function generateUUID() {
+            let dt = new Date().getTime();
+            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = (dt + Math.random() * 16) % 16 | 0;
+                dt = Math.floor(dt / 16);
+                return (c === 'x' ? r: (r & 0x3 | 0x8)).toString(16);
+            });
+            return uuid;
+        }
+
+        function listAllFiles() {
+            const storageRef = firebase.storage().ref();
+            storageRef.listAll().then(result => {
+                clearFileList(); // Clear existing file list
+                result.items.forEach(fileRef => {
+                    fileRef.getDownloadURL().then(url => {
+                        fileRef.getMetadata().then(metadata => {
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
+                            if (!metadata.customMetadata.privateFile) {
+                                addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid);
+                            }
+                        });
+                    });
+                });
+            }).catch(error => {
+                console.error("Failed to list files:", error);
+                alert("Failed to list files");
+            });
+        }
+
+        function sendToDiscord(url, fileName) {
+            // Accept file name as argument
+            const webhookUrl = "https://discord.com/api/webhooks/1244828570270961794/RLAqNQu6CpQc2fde-nmjbAVoe7nKJCm627jk1EhvytJKkrfUoinUX_l9b6YiFUZJt30T";
+            const message = `A new map has just been uploaded, ${fileName}.`; // Use file name in the message
+            const payload = JSON.stringify({
+                content: message
+            });
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: payload
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+            }).catch(error => {
+                console.error("Failed to send notification to Discord:", error);
+            });
+        }
+
+        function addFileToList(fileName, url, fullPath, isOwner, uid) {
+            const fileList = document.getElementById('fileList');
+            const fileItem = document.createElement('div');
+            fileItem.id = `file-${fileName}`;
+            fileItem.innerHTML = `
+            <div class="grid-item">
+            <div class="file-name">${fileName}</div>
+            <br>
+            <div class="btn-list-side">
+            ${isOwner ? `   <button class="download-button" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`: `   <button class="download-button-nodele" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`}
+            ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${fullPath}')">Delete</button>`: ``}
+            </div>
+            </div>
+            `;
+            fileList.appendChild(fileItem);
+        }
+
+        async function FileAlreadyExists(name) {
+            const storageRef = firebase.storage().ref();
+            const result = await storageRef.listAll();
+            for (const file of result.items) {
+                if (file.name === name) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function clearFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = ''; // Clear the file list
+        }
+
+        function deleteFile(fullPath) {
+            const fileRef = firebase.storage().ref(fullPath);
+            fileRef.getMetadata().then(metadata => {
+                if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
+                    fileRef.delete().then(() => {
+                        alert("File deleted successfully");
+                        listAllFiles(); // Refresh the file list
+                    }).catch(error => {
+                        console.error("File deletion failed:", error);
+                        alert("File deletion failed");
+                    });
+                } else {
+                    alert("You do not have permission to delete this file");
+                }
+            }).catch(error => {
+                console.error("Failed to get file metadata:", error);
+                alert("Failed to get file metadata");
+            });
+        }
+
+        function deleteFileOLD(uid) {
+            console.log("deleting file with uid\"" + uid + "\"");
+            const storageRef = firebase.storage().ref();
+            storageRef.listAll().then(result => {
+                result.items.forEach(fileRef => {
+                    fileRef.getMetadata().then(metadata => {
+                        console.log("comparing " + uid + " to " + metadata.customMetadata.spcluid);
+                        if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
+                            console.log("found");
+                            fileRef.delete().then(() => {
+                                listAllFiles(); // Refresh the file list
+                            }).catch(error => {
+                                alert("File deletion failed");
+                            });
+                        }
+                    });
+                });
+            }).catch(error => {
+                console.error("Failed to list files:", error);
+            });
+        }
+    </script>
 </body>
 
 </html>
