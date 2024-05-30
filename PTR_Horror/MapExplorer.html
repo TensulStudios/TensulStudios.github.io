@@ -263,17 +263,20 @@
       const storageRef = firebase.storage().ref();
       const file = document.getElementById('fileInput').files[0];
       if (!file) {
+fileAlrProc=false;
         alert("No file selected");
         return;
       }
       if (!file.name.endsWith('.ptr')) {
+fileAlrProc=false;
         alert("Only .ptr files are allowed");
         return;
       }
 
       const fileExists = await FileAlreadyExists(file.name);
       if (fileExists) {
-        alert("That name is already taken, think of something creative!");
+        fileAlrProc=false;
+        alert("That name is already taken, think of something more creative!");
         return;
       }
 
