@@ -13,17 +13,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #3b3054;
+            background-image: url("bg.png");
             /* Dark purple background */
             color: white;
             font-family: cursive, sans-serif;
+            backdrop-filter: blur(2px);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .container {
+            backdrop-filter: blur(5px);
             width: 60%;
             max-width: 1200px;
             padding: 50px;
-            background-color: rgba(60, 12, 25, 0.3);
+            background-color: rgba(0, 0, 0, 0.678);
             /* Light purple surrounding */
             border-radius: 10px;
             /* Rounded corners */
@@ -38,10 +43,11 @@
         }
 
         .grid-item {
+            backdrop-filter: blur(5px);
             display: grid;
-            background-color: #4e4273;
+            background-color: #0000009d;
             /* Darkish purple */
-            border: 1px solid #3b3054;
+            border: 1px solid #00000081;
             /* Dark purple border */
             color: #fff;
             /* Text color */
@@ -58,7 +64,7 @@
             bottom: 10px;
             left: 80%;
             transform: translateX(-80%);
-            background-color: #f25f5c;
+            background-color: rgba(83, 48, 48, 0.425);
             /* Delete button color */
             color: #fff;
             border: none;
@@ -74,13 +80,13 @@
         }
 
         .download-button:hover {
-            background-color: green;
+            background-color: rgb(19, 29, 19);
             /* Delete button color */
             padding: 9px 14px;
         }
 
         .delete-button:hover {
-            background-color: #cf514e;
+            background-color: #331f1f;
             /* Delete button color */
             padding: 9px 14px;
         }
@@ -91,7 +97,7 @@
             bottom: 10px;
             left: 20%;
             transform: translateX(-20%);
-            background-color: #039e03;
+            background-color: #868686;
             /* Delete button color */
             color: #fff;
             border: none;
@@ -106,7 +112,7 @@
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #039e03;
+            background-color: rgba(48, 83, 57, 0.425);
             /* Delete button color */
             color: #fff;
             border: none;
@@ -117,7 +123,7 @@
 
         .file-name {
             text-align: center;
-            font-size: 9px;
+            font-size: 13px;
             margin-bottom: 10px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -140,17 +146,17 @@
         }
 
         .upload-buttons button {
-            background-color: #6a4f7f;
+            background-color: #1f1f1f73;
             color: white;
             border: none;
-            padding: 5px 50px;
+            padding: 10px 50px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .upload-buttons button:hover {
-            background-color: #5a3f6f;
+            background-color: #49464b56;
         }
 
         .bottom-left-button:hover {
@@ -180,7 +186,6 @@
             font-size: 16px;
         }
     </style>
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="PTR Map Explorer">
     <meta property="og:description" content="Download or Upload mods for PTR!">
     <meta property="og:url" content="https://TMPOraryStudios.github.io/PTR_Horror/MapUpload">
@@ -189,7 +194,6 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- Twitter Card Meta Tags (optional, but recommended) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="PTR Map Explorer">
     <meta name="twitter:description" content="Download or Upload mods for PTR!">
@@ -199,7 +203,7 @@
 <body>
     <button class="bottom-left-button" onclick="window.open('https://discord.gg/UssjuJMFyH')"><img src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
     <div class="container">
-        <div id="userUid">
+        <div hidden id="userUid">
             Logging in..
         </div>
         <h2>PTR Modded Maps</h2>
@@ -209,8 +213,6 @@
             <button id="uploadbuttonTxt" onclick="uploadFile()">Upload</button>
             <br>
             <button onclick="listAllFiles()">Reload</button>
-            <br>
-            <button onclick="window.open('https://tmporarystudios.github.io/PTR_Horror/MakeAMap.html','_blank ')">Make a Map!</button>
             <br>
         </div>
         <br>
@@ -327,7 +329,7 @@
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
-                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'wWaJo896gbep7yNec2wPVg0YxJw1' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === '7BwPN1sHE4XNKrHWzjC8rpo9hUO2' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
                             if (!metadata.customMetadata.privateFile) {
                                 addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid);
                             }
