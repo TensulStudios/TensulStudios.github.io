@@ -116,18 +116,6 @@
             position: relative;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
-            border-radius: 2px;
-        }
-
         .header h1 {
             font-size: 3.5rem;
             font-weight: 800;
@@ -136,7 +124,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0px 50px rgba(0, 0, 0, 0.5);
         }
 
         .header p {
@@ -371,6 +359,50 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+        
+         .mod-info {
+            background: rgba(20, 0, 20, 0);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .mod-info h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .mod-type {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .mod-type.legacy {
+            border-left-color: #ff4757;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mod-type.new {
+            border-left-color: #2ed573;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mod-type h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .mod-type p {
+            color: #bbb;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
 
         @media (max-width: 768px) {
             .container {
@@ -407,11 +439,6 @@
 </head>
 
 <body>
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
 
     <button class="discord-btn" onclick="window.open('https://discord.gg/cRQWaRtGvZ')">
         <img src='https://img.icons8.com/?size=30&id=D2NqKl85S8Ye&format=png&color=ffffff' alt="Discord">
@@ -420,13 +447,26 @@
     <div class="container">
         <div class="header">
             <h1>PTR Modded Maps</h1>
-            <p>Discover, upload, and share amazing PTR mods with the community</p>
         </div>
 
         <div class="user-info" id="userInfo" style="display: none;">
             <div id="userUid">🔄 Logging in...</div>
         </div>
 
+        <div class="upload-section">
+            <div class="mod-info">
+                    <h3>📋 Mod Manager Types</h3>
+                    <div class="mod-type legacy">
+                        <h4>🔴 PTRLMM (PTR LEGACY MOD MANAGER)</h4>
+                        <p>Old mod manager - Won't work with new mod manager. Slow and hard to make mods with.</p>
+                    </div>
+                    <div class="mod-type new">
+                        <h4>🟢 TABMM (TEMPS ASSET BUNDLE MOD MANAGER)</h4>
+                        <p>New mod manager - Faster and easier to make mods with.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="upload-section">
             <div class="upload-area" onclick="document.getElementById('fileInput').click()" id="uploadArea">
                 <div class="upload-icon">📁</div>
@@ -671,7 +711,7 @@
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
-                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'iDMTcnAz56eR9dHzEKD4oKmw37x1';
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === '7BwPN1sHE4XNKrHWzjC8rpo9hUO2' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
                             if (!metadata.customMetadata.privateFile) {
                                 addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, fileRef.name, fileRef.name.endsWith(".ptr"));
                             }
