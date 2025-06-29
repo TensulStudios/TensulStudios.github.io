@@ -6,184 +6,449 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PTR Modded Maps</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a2a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("bg.png") center/cover;
+            backdrop-filter: blur(3px) brightness(0.3);
+            z-index: -1;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+            background: rgba(150, 0, 0, 0.4);
+        }
+
+        .particle:nth-child(2) {
+            top: 50%;
+            left: 80%;
+            animation-delay: 3s;
+            background: rgba(100, 0, 100, 0.4);
+        }
+
+        .particle:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            animation-delay: 6s;
+            background: rgba(0, 50, 100, 0.4);
+        }
+
+        .particle:nth-child(4) {
+            top: 30%;
+            left: 70%;
+            animation-delay: 2s;
+            background: rgba(80, 0, 0, 0.4);
+        }
+
+        .particle:nth-child(5) {
+            top: 70%;
+            left: 10%;
+            animation-delay: 4s;
+            background: rgba(120, 0, 50, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 0.8; }
+        }
+
+        .discord-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2c2c54, #40407a);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background-image: url("bg.png");
-            /* Dark purple background */
-            color: white;
-            font-family: cursive, sans-serif;
-            backdrop-filter: blur(2px);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .discord-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            border-color: rgba(255, 0, 0, 0.8);
         }
 
         .container {
-            backdrop-filter: blur(5px);
-            width: 60%;
+            width: 80%;
             max-width: 1200px;
-            padding: 50px;
-            background-color: rgba(0, 0, 0, 0.678);
-            /* Light purple surrounding */
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            border: 2px solid rgba(100, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            top: 50px;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+            border-radius: 15px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .user-info {
+            background: rgba(20, 0, 0, 0.8);
+            border: 1px solid rgba(150, 0, 0, 0.3);
             border-radius: 10px;
-            /* Rounded corners */
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .mod-info {
+            background: rgba(20, 0, 20, 0.8);
+            border: 1px solid rgba(150, 0, 150, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .mod-info h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .mod-type {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .mod-type.legacy {
+            border-left-color: #ff4757;
+            background: rgba(40, 0, 0, 0.6);
+        }
+
+        .mod-type.new {
+            border-left-color: #2ed573;
+            background: rgba(0, 40, 0, 0.6);
+        }
+
+        .mod-type h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .mod-type p {
+            color: #bbb;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .upload-section {
+            background: rgba(10, 0, 10, 0.9);
+            border: 1px solid rgba(100, 0, 100, 0.3);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(150, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .upload-area:hover {
+            border-color: rgba(255, 0, 0, 0.8);
+            background: rgba(50, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2c2c54, #40407a);
+            border: 1px solid rgba(150, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 12px 25px;
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #40407a, #2c2c54);
+            border-color: rgba(255, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-reload {
+            background: linear-gradient(135deg, #2c5430, #407a40);
+            border-color: rgba(0, 150, 0, 0.5);
+        }
+
+        .btn-reload:hover {
+            background: linear-gradient(135deg, #407a40, #2c5430);
+            border-color: rgba(0, 255, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            /* Adjust column width as needed */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            /* Adjust gap between items */
+            margin-top: 30px;
         }
 
         .grid-item {
-            backdrop-filter: blur(5px);
-            display: grid;
-            background-color: #0000009d;
-            /* Darkish purple */
-            border: 1px solid #00000081;
-            /* Dark purple border */
-            color: #fff;
-            /* Text color */
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(100, 0, 0, 0.3);
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 5px;
-            /* Rounded corners */
             position: relative;
-            /* For positioning the delete button */
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        .delete-button {
-            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
+        .grid-item::before {
+            content: '';
             position: absolute;
-            bottom: 10px;
-            left: 80%;
-            transform: translateX(-80%);
-            background-color: rgba(83, 48, 48, 0.425);
-            /* Delete button color */
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff4757, #ff6b6b, #ff4757);
+            border-radius: 10px 10px 0 0;
         }
 
-        .download-button-nodele:hover {
-            padding: 9px 14px;
-            background-color: green;
-            /* Delete button color */
-        }
-
-        .download-button:hover {
-            background-color: rgb(19, 29, 19);
-            /* Delete button color */
-            padding: 9px 14px;
-        }
-
-        .delete-button:hover {
-            background-color: #331f1f;
-            /* Delete button color */
-            padding: 9px 14px;
-        }
-
-        .download-button {
-            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
-            position: absolute;
-            bottom: 10px;
-            left: 20%;
-            transform: translateX(-20%);
-            background-color: #868686;
-            /* Delete button color */
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .download-button-nodele {
-            transition: width 0.3s, height 0.3s, background-color 0.3s, rotate 0.3s, padding 0.3s;
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(48, 83, 57, 0.425);
-            /* Delete button color */
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
+        .grid-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 0, 0.6);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
         }
 
         .file-name {
-            text-align: center;
-            font-size: 13px;
+            font-size: 1.2rem;
+            font-weight: bold;
             margin-bottom: 10px;
-            overflow: hidden;
+            text-align: center;
+            color: #fff;
             text-overflow: ellipsis;
+            overflow: hidden;
             white-space: nowrap;
         }
 
-        .file-link {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .file-link:hover {
-            text-decoration: underline;
-        }
-
-        .upload-buttons {
-            display: flex;
-            gap: 5px;
-            /* Adjust the space between buttons */
-        }
-
-        .upload-buttons button {
-            background-color: #1f1f1f73;
-            color: white;
-            border: none;
-            padding: 10px 50px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .upload-buttons button:hover {
-            background-color: #49464b56;
-        }
-
-        .bottom-left-button:hover {
-            background-color: rgba(0, 0, 0, 0.1);
-            /* Light purple surrounding */
-            width: 70px;
-            height: 70px;
-        }
-
-        .bottom-left-button {
-            background-color: rgba(0, 0, 0, 0);
-            /* Light purple surrounding */
-            border-radius: 10px;
-            /* Rounded corners */
+        .file-type {
             text-align: center;
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            position: absolute;
-            bottom: 2%;
-            width: 60px;
-            height: 60px;
-            border: none;
-            cursor: pointer;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        #userUid {
-            margin-bottom: 20px;
-            font-size: 16px;
+        .file-type.legacy {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+
+        .file-type.new {
+            background: rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.3);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #2c5430, #407a40);
+            border-color: rgba(0, 150, 0, 0.5);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-download:hover {
+            background: linear-gradient(135deg, #407a40, #2c5430);
+            border-color: rgba(0, 255, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #542c2c, #7a4040);
+            border-color: rgba(150, 0, 0, 0.5);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #7a4040, #542c2c);
+            border-color: rgba(255, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff4757;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            border: 1px solid;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.success {
+            background: rgba(0, 100, 0, 0.9);
+            border-color: rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .notification.error {
+            background: rgba(100, 0, 0, 0.9);
+            border-color: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px 15px;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
     </style>
     <meta property="og:title" content="PTR Map Explorer">
@@ -197,25 +462,59 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="PTR Map Explorer">
     <meta name="twitter:description" content="Download or Upload mods for PTR!">
-    <meta name="twitter:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ny8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
+    <meta name="twitter:image" content="https://img.itch.zone/aW1hZ2UvMjUzNDQ2Ly8xNTMyNzY0NS5wbmc=/250x600/ZG0%2Bov.png">
 </head>
 
 <body>
-    <button class="bottom-left-button" onclick="window.open('https://discord.gg/cRQWaRtGvZ')"><img src='https://img.icons8.com/?size=50&id=D2NqKl85S8Ye&format=png&color=000000'></button>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <button class="discord-btn" onclick="window.open('https://discord.gg/cRQWaRtGvZ')">
+        <img src='https://img.icons8.com/?size=30&id=D2NqKl85S8Ye&format=png&color=ffffff' alt="Discord">
+    </button>
+
     <div class="container">
-        <div hidden id="userUid">
-            Logging in..
+        <div class="user-info" id="userInfo" style="display: none;">
+            <div id="userUid">🔄 Logging in...</div>
         </div>
+
         <h2>PTR Modded Maps</h2>
-        <div class="upload-buttons">
-            <input type="file" id="fileInput" accept=".ptr, .ptrmod">
-            <br>
-            <button id="uploadbuttonTxt" onclick="uploadFile()">Upload</button>
-            <br>
-            <button onclick="listAllFiles()">Reload</button>
-            <br>
+
+        <div class="mod-info">
+            <h3>📋 Mod Manager Types</h3>
+            <div class="mod-type legacy">
+                <h4>🔴 PTRLMM (PTR LEGACY MOD MANAGER)</h4>
+                <p>Old mod manager - Won't work with new mod manager. Slow and hard to make mods with.</p>
+            </div>
+            <div class="mod-type new">
+                <h4>🟢 TABMM (TEMPS ASSET BUNDLE MOD MANAGER)</h4>
+                <p>New mod manager - Faster and easier to make mods with.</p>
+            </div>
         </div>
-        <br>
+
+        <div class="upload-section">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()" id="uploadArea">
+                <div style="font-size: 2rem; margin-bottom: 15px;">📁</div>
+                <h3>Click to upload or drag files here</h3>
+                <p>Support for .ptr and .ptrmod files</p>
+                <input type="file" id="fileInput" class="file-input" accept=".ptr, .ptrmod">
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn" id="uploadBtn" onclick="uploadFile()">
+                    <span id="uploadBtnText">Upload</span>
+                </button>
+                <button class="btn btn-reload" onclick="listAllFiles()">
+                    Reload
+                </button>
+            </div>
+        </div>
+
         <div class="grid-container" id="fileList"></div>
     </div>
 
@@ -237,50 +536,121 @@
         firebase.initializeApp(firebaseConfig);
 
         let currentUser = null;
+        let fileAlrProc = false;
+
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.style.borderColor = 'rgba(255, 0, 0, 0.8)';
+            uploadArea.style.background = 'rgba(100, 0, 0, 0.3)';
+        }
+
+        function unhighlight(e) {
+            uploadArea.style.borderColor = 'rgba(150, 0, 0, 0.5)';
+            uploadArea.style.background = 'rgba(0, 0, 0, 0.3)';
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                updateUploadAreaText(files[0]);
+            }
+        }
+
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                updateUploadAreaText(e.target.files[0]);
+            }
+        });
+
+        function updateUploadAreaText(file) {
+            uploadArea.innerHTML = `
+                <div style="font-size: 2rem; margin-bottom: 15px; color: #2ed573;">✅</div>
+                <h3>File selected: ${file.name}</h3>
+                <p>Ready to upload!</p>
+            `;
+        }
 
         firebase.auth().signInAnonymously().catch(function(error) {
-            document.getElementById('userUid').innerHTML = `Login failed.`;
+            document.getElementById('userUid').innerHTML = `❌ Login failed.`;
         });
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                document.getElementById('userUid').innerHTML = `Logged in as ` + user.uid;
+                document.getElementById('userInfo').style.display = 'block';
+                document.getElementById('userUid').innerHTML = `👤 Logged in as: ${user.uid}`;
                 currentUser = user;
                 listAllFiles();
             } else {
                 currentUser = null;
             }
         });
-        let fileAlrProc = false
+
         async function uploadFile() {
-            document.getElementById("uploadbuttonTxt").innerText = 'Uploading..';
+            const uploadBtnText = document.getElementById("uploadBtnText");
+            const uploadBtn = document.getElementById("uploadBtn");
+            
+            uploadBtnText.innerHTML = 'Uploading... <span class="loading"></span>';
+            uploadBtn.disabled = true;
+            
             if (fileAlrProc) {
-                alert("You are already uploading a file!");
+                showNotification("You are already uploading a file!", "error");
                 return;
             }
 
             fileAlrProc = true;
             const storageRef = firebase.storage().ref();
-            const file = document.getElementById('fileInput').files[0]
+            const file = document.getElementById('fileInput').files[0];
+            
             if (!file) {
-                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                uploadBtnText.innerText = 'Upload';
+                uploadBtn.disabled = false;
                 fileAlrProc = false;
-                alert("No file selected");
+                showNotification("No file selected", "error");
                 return;
             }
+            
             if (!(file.name.endsWith('.ptr') || file.name.endsWith('.ptrmod'))) {
                 fileAlrProc = false;
-                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
-                alert("Only .ptr files are allowed");
+                uploadBtnText.innerText = 'Upload';
+                uploadBtn.disabled = false;
+                showNotification("Only .ptr and .ptrmod files are allowed", "error");
                 return;
             }
+            
             const fileExists = await FileAlreadyExists(file.name);
             if (fileExists) {
-                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                uploadBtnText.innerText = 'Upload';
+                uploadBtn.disabled = false;
                 fileAlrProc = false;
-                alert("That name is already taken, think of something more creative!");
+                showNotification("That name is already taken, think of something more creative!", "error");
                 return;
             }
+            
             const fileRef = storageRef.child(file.name);
             const metadata = {
                 customMetadata: {
@@ -292,16 +662,48 @@
             await fileRef.put(file, metadata).then(() => {
                 fileRef.getDownloadURL().then(url => {
                     fileAlrProc = false;
-                    document.getElementById("uploadbuttonTxt").innerText = 'Uploaded!';
-                    sendToDiscord(url, GetNameWithoutFileExtension(file.name)); // Pass file name to the function
+                    uploadBtnText.innerHTML = '✅ Uploaded!';
+                    uploadBtn.disabled = false;
+                    showNotification("File uploaded successfully!", "success");
+                    sendToDiscord(url, GetNameWithoutFileExtension(file.name));
                     addFileToList(GetNameWithoutFileExtension(file.name), url, fileRef.fullPath, true, file.name);
+                    
+                    // Reset upload area
+                    uploadArea.innerHTML = `
+                        <div style="font-size: 2rem; margin-bottom: 15px;">📁</div>
+                        <h3>Click to upload or drag files here</h3>
+                        <p>Support for .ptr and .ptrmod files</p>
+                    `;
+                    fileInput.value = '';
+                    
+                    setTimeout(() => {
+                        uploadBtnText.innerText = 'Upload';
+                    }, 3000);
                 });
             }).catch(error => {
-                document.getElementById("uploadbuttonTxt").innerText = 'Upload failed.';
+                uploadBtnText.innerText = 'Upload';
+                uploadBtn.disabled = false;
                 fileAlrProc = false;
                 console.error("File upload failed:", error);
-                alert("File upload failed");
+                showNotification("File upload failed", "error");
             });
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         function GetNameWithoutFileExtension(fileName) {
@@ -329,31 +731,32 @@
                         fileRef.getMetadata().then(metadata => {
                             const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === '7BwPN1sHE4XNKrHWzjC8rpo9hUO2' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
                             if (!metadata.customMetadata.privateFile) {
-                                addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, metadata.customMetadata.spcluid, fileRef.name.endsWith(".ptr"));
+                                addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, fileRef.name, fileRef.name.endsWith(".ptr"));
                             }
                         });
                     });
                 });
             }).catch(error => {
                 console.error("Failed to list files:", error);
-                alert("Failed to list files");
+                showNotification("Failed to list files", "error");
             });
         }
 
-        function addFileToList(fileName, url, fullPath, isOwner, uid, legacy) {
+        function addFileToList(fileName, url, fullPath, isOwner, originalName, legacy) {
             const fileList = document.getElementById('fileList');
             const fileItem = document.createElement('div');
             fileItem.id = `file-${fileName}`;
             fileItem.innerHTML = `
-            <div class="grid-item">
-            <div class="file-name" style="font-size:20px;">${fileName}</div>
-            <h6 style="text-align:center; font-weight:100; margin-top:5px;">${legacy ? "PTRLMM" : "TABMM"}</h6>
-
-            <div class="btn-list-side">
-            ${isOwner ? `   <button class="download-button" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`: `   <button class="download-button-nodele" class="file-link" onclick="window.open('${url}', '_blank');" target="_blank">Download`}
-            ${isOwner ? `   <button class="delete-button" onclick="deleteFile('${fullPath}')">Delete</button>`: ``}
-            </div>
-            </div>
+                <div class="grid-item">
+                    <div class="file-name">${fileName}</div>
+                    <div class="file-type ${legacy ? 'legacy' : 'new'}">${legacy ? "PTRLMM" : "TABMM"}</div>
+                    <div class="file-actions">
+                        <button class="btn btn-download" onclick="window.open('${url}', '_blank')">
+                            Download
+                        </button>
+                        ${isOwner ? `<button class="btn btn-delete" onclick="deleteFile('${fullPath}')">Delete</button>` : ''}
+                    </div>
+                </div>
             `;
             fileList.appendChild(fileItem);
         }
@@ -374,48 +777,4 @@
             fileList.innerHTML = '';
         }
 
-        function deleteFile(fullPath) {
-            const fileRef = firebase.storage().ref(fullPath);
-            fileRef.getMetadata().then(metadata => {
-                if (metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid) {
-                    fileRef.delete().then(() => {
-                        alert("File deleted successfully");
-                        listAllFiles();
-                    }).catch(error => {
-                        console.error("File deletion failed:", error);
-                        alert("File deletion failed");
-                    });
-                } else {
-                    alert("You do not have permission to delete this file");
-                }
-            }).catch(error => {
-                console.error("Failed to get file metadata:", error);
-                alert("Failed to get file metadata");
-            });
-        }
-
-        function deleteFileOLD(uid) {
-            console.log("deleting file with uid\"" + uid + "\"");
-            const storageRef = firebase.storage().ref();
-            storageRef.listAll().then(result => {
-                result.items.forEach(fileRef => {
-                    fileRef.getMetadata().then(metadata => {
-                        console.log("comparing " + uid + " to " + metadata.customMetadata.spcluid);
-                        if (metadata.customMetadata && metadata.customMetadata.spcluid === uid) {
-                            console.log("found");
-                            fileRef.delete().then(() => {
-                                listAllFiles();
-                            }).catch(error => {
-                                alert("File deletion failed");
-                            });
-                        }
-                    });
-                });
-            }).catch(error => {
-                console.error("Failed to list files:", error);
-            });
-        }
-    </script>
-</body>
-
-</html>
+        function deleteFile(fullPath
