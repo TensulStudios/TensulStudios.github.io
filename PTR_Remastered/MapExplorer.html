@@ -671,7 +671,7 @@
                 result.items.forEach(fileRef => {
                     fileRef.getDownloadURL().then(url => {
                         fileRef.getMetadata().then(metadata => {
-                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === '7BwPN1sHE4XNKrHWzjC8rpo9hUO2' || currentUser.uid === 'FXyQNrhhieMo3ujK1lMUi1DfUn22' || currentUser.uid === 'keNYZy4lwUWudHcyO76thLDMpTW2';
+                            const isOwner = metadata.customMetadata && metadata.customMetadata.owner === currentUser.uid || currentUser.uid === 'iDMTcnAz56eR9dHzEKD4oKmw37x1';
                             if (!metadata.customMetadata.privateFile) {
                                 addFileToList(GetNameWithoutFileExtension(fileRef.name), url, fileRef.fullPath, isOwner, fileRef.name, fileRef.name.endsWith(".ptr"));
                             }
